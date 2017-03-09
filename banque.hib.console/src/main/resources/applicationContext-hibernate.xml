@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+">
+
+	<!-- Déclaration de la source de données pour Hibernate -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/banque-hib" />
+		<property name="username" value="root" />
+		<property name="password" value="password" />
+		<property name="initialSize" value="5" />
+	</bean>
+
+	<!-- Déclaration de la sessionFactory Hibernate -->
+	<bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+<!-- 
+ 		<property name="mappingResources">
+			<list>
+				<value>fr/formation/banque/entities/Client.hbm.xml</value>
+				<value>fr/formation/banque/entities/Compte.hbm.xml</value>
+			</list>
+		</property>
+ -->
+		<property name="annotatedClasses">
+	       <list>
+	           <value>fr.eni.formation.banque.Operation</value>
+	           <value>fr.eni.formation.banque.Debit</value>
+	           <value>fr.eni.formation.banque.Credit</value>
+	           <value>fr.eni.formation.banque.Compte</value>
+	           <value>fr.eni.formation.banque.Client</value>
+	       </list>
+	    </property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.import_files">/banque.sql</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="clientDAO" class="fr.eni.formation.banque.hibernate.ClientDAO">
+		<!-- On injecte la sessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory" />		  
+	</bean>
+	<bean id="compteDAO" class="fr.eni.formation.banque.hibernate.CompteDAO">
+		<property name="sessionFactory" ref="sessionFactory" />		  
+	</bean>
+	<bean id="operationDAO" class="fr.eni.formation.banque.hibernate.OperationDAO">
+		<property name="sessionFactory" ref="sessionFactory" />		  
+	</bean>
+
+	<bean id="daoFactory" class="fr.eni.formation.banque.dao.DAOFactory">
+		<property name="clientDAO" ref="clientDAO" />		  
+		<property name="compteDAO" ref="compteDAO" />		  
+		<property name="operationDAO" ref="operationDAO" />		  
+	</bean>
+
+
+	<!-- Gestionnaire transactionnel Hibernate -->
+	<bean id="txManager"
+		  class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+   		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- Activation des annotations de transaction -->	
+	<tx:annotation-driven transaction-manager="txManager" />
+
+</beans>
+
+
+
+
+
+
+
+
+
+

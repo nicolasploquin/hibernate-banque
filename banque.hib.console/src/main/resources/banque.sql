@@ -1,0 +1,32 @@
+insert into Client (nom, prenom) values ('Troadec', 'Nolwenn');
+insert into Client (nom, prenom) values ('Leblanc', 'Marc');
+insert into Client (nom, prenom) values ('Martin', 'Leandre');
+insert into Client (nom, prenom) values ('Lenoir', 'Sophie');
+insert into Client (nom, prenom) values ('Legac', 'Erwann');
+insert into Client (nom, prenom) values ('Lebreton', 'Solenn');
+insert into Client (nom, prenom) values ('Meyer', 'Nils');
+insert into Client (nom, prenom) values ('Durand', 'Marie');
+insert into Client (nom, prenom) values ('Scheidt', 'Robert');
+insert into Client (nom, prenom) values ('Ainslie', 'Ben');
+insert into Client (nom, prenom) values ('Richard', 'Mathieu');
+insert into Client (nom, prenom) values ('Bolt', 'Usain');
+insert into Client (nom, prenom) values ('Loeb', 'Sébastien');
+insert into Client (nom, prenom) values ('Robert', 'Alain');
+insert into Client (nom, prenom) values ('Dupuis', 'Martin');
+commit;
+
+insert into Compte(idCompte,numero,idClient) values (1,'1234',1);
+insert into Compte(idCompte,numero,idClient) values (2,'2345',1);
+insert into Compte(idCompte,numero,idClient) values (3,'3456',1);
+insert into Compte(idCompte,numero,idClient) values (4,'4567',1);
+commit;
+
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (1,'2011-04-01','Salaire Renault',1300.00,'Credit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (2,'2011-04-02','SFR',-54.00,'Debit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (3,'2011-04-03','EDF',-78.00,'Debit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (4,'2011-04-04','E.Leclerc',-65.00,'Debit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (5,'2011-04-05','CPAM',22.00,'Credit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (6,'2011-04-06','TAN Avril',-48.00,'Debit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (9,'2013-12-10','TAN Decembre',-53.00,'Debit',1);
+insert into Operation(idOperation,date,libelle,montant,type,idCompte) values (13,'2014-07-03','TAN Juillet',-58.00,'Debit',1);
+commit;
