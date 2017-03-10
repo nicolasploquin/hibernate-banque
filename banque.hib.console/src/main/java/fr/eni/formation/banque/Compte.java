@@ -4,11 +4,12 @@
 package fr.eni.formation.banque;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
 
 
 /**
@@ -32,6 +36,7 @@ public class Compte implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idCompte;
+	@Column(unique=true)
 	private String numero;
 
 	/**
@@ -42,18 +47,30 @@ public class Compte implements Serializable {
 	 * 		where ope.idCompte = idCompte
 	 * ) as solde</code>
 	 */
-	@Transient
-	private double solde;
+//	@Formula(value="(select ifnull(sum(ope.montant),0) "
+//			  +"from Operation ope where ope.idCompte = idCompte)")
+	private transient double solde;
+	
+//	@Transient
+//	@Column(name="(select ifnull(sum(ope.montant),0) from Operation ope where ope.idCompte = idCompte)",
+//			insertable=false,
+//			updatable=false)
+//	private double solde;
 	
 	@ManyToOne
 	@JoinColumn(name="idClient")
 	private Client client;
 	
-	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE},
-			fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="idCompte")
 	private List<Operation> operations = new LinkedList<Operation>();
 
+	
+	
+	
+	
+	
+	
 	public Compte() {
 		super();
 	}
@@ -118,18 +135,42 @@ public class Compte implements Serializable {
 		this.operations = operations;
 	}
 	
+//	@PostLoad
 	private void majSolde(){
 		double solde = 0.0;
 		for(Operation ope : getOperations()){
 			solde += ope.getMontant();
 		}
 		setSolde(solde);
-	}	
+	}
+	
+	public void virement(Compte dest, String libelle, double montant){
+		Debit debit = new Debit(new Date(), libelle, -montant);
+		Credit credit = new Credit(new Date(), libelle, montant);
+		
+		this.getOperations().add(debit);
+		dest.getOperations().add(credit);
 
+	}
+	
+
+	
+	
 	@Override
 	public String toString() {
-		return String.format("%s (%s)\n",
-						numero, client!=null?client.getNom():"");
+		String texte = String.format("%s : %11.2f (%s)\n", numero, solde, client!=null?client.getNom():"");
+		for (Operation operation : operations) {
+			texte += operation;
+		}
+		return texte;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 }

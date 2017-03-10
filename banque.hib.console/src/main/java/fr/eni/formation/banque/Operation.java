@@ -6,6 +6,8 @@ package fr.eni.formation.banque;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -73,7 +75,7 @@ public abstract class Operation implements Serializable {
 	
 	@Override
 	public String toString() {
-		return date + " : " + libelle + "\t" + montant + "\n";
+		return String.format("%tF : %-20s %11.2f €\n", date, libelle, montant);
 	}
 
 }

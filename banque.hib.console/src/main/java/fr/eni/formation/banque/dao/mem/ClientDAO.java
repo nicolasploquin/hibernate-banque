@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.eni.formation.banque.Client;
+import fr.eni.formation.banque.Compte;
 import fr.eni.formation.banque.dao.IClientDAO;
 
 public class ClientDAO implements IClientDAO {
@@ -39,6 +40,11 @@ public class ClientDAO implements IClientDAO {
 
 	public List<Client> readAll() {
 		return clients;
+	}
+	
+	public Compte addCompte(Client client, String numero) {
+		// TODO addCompte
+		return null;
 	}
 
 }

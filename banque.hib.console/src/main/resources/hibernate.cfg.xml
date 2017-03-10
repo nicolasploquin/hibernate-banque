@@ -5,7 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/banque-ericsson</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/banque</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">password</property>
 		<property name="connection.pool_size">1</property>
@@ -19,20 +19,6 @@
 		<mapping resource="fr/eni/formation/banque/ClientHBM.hbm.xml" />
 		<mapping class="fr.eni.formation.banque.Client" />
 		
-	<!-- 
-		<!- property name="hbm2ddl.import_files">/clients.sql,/comptes.sql,/operations.sql</property ->
-		<mapping class="fr.eni.formation.banque.Operation" />
-		<mapping class="fr.eni.formation.banque.Debit" />
-		<mapping class="fr.eni.formation.banque.Credit" />
-		<mapping class="fr.eni.formation.banque.Compte" />
-		<mapping class="fr.eni.formation.banque.Client" />
-	 -->
-		
-<!-- 
-		<mapping resource="fr/eni/formation/banque/Client.hbm.xml" />
-		<mapping resource="fr/eni/formation/banque/Compte.hbm.xml" />
-		<mapping resource="fr/eni/formation/banque/Operation.hbm.xml" />
- -->		
 		
 	</session-factory>
 	
