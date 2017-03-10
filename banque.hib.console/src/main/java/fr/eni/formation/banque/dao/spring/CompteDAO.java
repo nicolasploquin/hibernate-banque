@@ -24,12 +24,12 @@ import fr.eni.formation.banque.Debit;
 import fr.eni.formation.banque.Operation;
 import fr.eni.formation.banque.dao.ICompteDAO;
 
-//@Component("compteDAO")
+@Component("compteDAO")
 public class CompteDAO implements ICompteDAO {
 	
 	// Bean Spring sessionFactory
-//	@Autowired
-//	@Qualifier("sessionFactory")
+	@Autowired
+	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	@Transactional(TxType.REQUIRED)

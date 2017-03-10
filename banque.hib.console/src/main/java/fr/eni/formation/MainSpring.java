@@ -13,10 +13,12 @@ public class MainSpring {
 	
 	private static ApplicationContext context = null;
 	
+	@Autowired
+	@Qualifier("clientDAO")
 	private static IClientDAO clientDAO;
 	
-//	@Autowired
-//	@Qualifier("compteDAO")
+	@Autowired
+	@Qualifier("compteDAO")
 	private static ICompteDAO compteDAO;
 		
 	static {

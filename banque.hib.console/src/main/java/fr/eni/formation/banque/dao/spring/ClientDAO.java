@@ -11,14 +11,20 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import fr.eni.formation.banque.Client;
 import fr.eni.formation.banque.Compte;
 import fr.eni.formation.banque.dao.IClientDAO;
 
+@Component("clientDAO")
 public class ClientDAO implements IClientDAO {
 	
 	// Bean Spring sessionFactory
+	@Autowired
+	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	public ClientDAO() {

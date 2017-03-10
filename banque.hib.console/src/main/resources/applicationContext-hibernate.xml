@@ -12,11 +12,10 @@
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx.xsd
 ">
-<!-- 
-	<context:annotation-config>
-		<context:component-scan base-package="fr.eni.formation.banque.dao.spring" />
-	</context:annotation-config>
- -->
+
+	<context:annotation-config />
+	<context:component-scan base-package="fr.eni.formation.*" />
+	<!-- context:component-scan base-package="fr.eni.formation.banque.dao.spring" / -->
 
 	<!-- Déclaration de la source de données pour Hibernate -->
 	<bean id="localMySql" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -65,13 +64,13 @@
 	<!-- Activation des annotations de transaction -->	
 	<tx:annotation-driven transaction-manager="txManager" />
 
+	<!-- 
 	<bean id="clientDAO" class="fr.eni.formation.banque.dao.spring.ClientDAO">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="compteDAO" class="fr.eni.formation.banque.dao.spring.CompteDAO">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<!-- 
 	 -->
 
 
